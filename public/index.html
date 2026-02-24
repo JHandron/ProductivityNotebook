@@ -9,22 +9,43 @@
   <body>
     <main>
       <h1>Productivity Notebook</h1>
-      <p>Starter UI with vanilla JavaScript and a Node/Express API.</p>
 
-      <section>
-        <h2>Add event occurrence</h2>
-        <form id="event-form">
-          <label>Title <input name="title" required /></label>
-          <label>Date <input name="date" type="date" required /></label>
-          <label>Type <input name="eventType" placeholder="Workout" required /></label>
-          <label>Details <textarea name="details" rows="2"></textarea></label>
-          <button type="submit">Save event</button>
+      <section class="panel">
+        <h2>Event types</h2>
+        <form id="event-type-form" class="inline-form">
+          <input name="name" placeholder="Workout" required />
+          <input name="colorHex" type="color" value="#2563eb" required />
+          <button type="submit">Add type</button>
         </form>
+        <ul id="event-types-list"></ul>
       </section>
 
-      <section>
-        <h2>Events this month</h2>
-        <ul id="events-list"></ul>
+      <section class="panel">
+        <h2>Month Calendar</h2>
+        <div class="calendar-nav">
+          <button id="prev-month">←</button>
+          <h3 id="month-label"></h3>
+          <button id="next-month">→</button>
+        </div>
+        <div class="calendar-grid" id="calendar-grid"></div>
+      </section>
+
+      <section class="panel details-panel">
+        <h2 id="selected-date-label">Select a day</h2>
+
+        <form id="event-form" class="stacked-form">
+          <h3>Add event</h3>
+          <input name="title" placeholder="Leg day" required />
+          <select name="eventTypeId" id="event-type-select" required></select>
+          <textarea name="details" rows="2" placeholder="Optional details"></textarea>
+          <button type="submit">Save event</button>
+        </form>
+
+        <form id="note-form" class="stacked-form">
+          <h3>Daily note</h3>
+          <textarea name="content" rows="3" placeholder="Weight - 147.6 lbs."></textarea>
+          <button type="submit">Save note</button>
+        </form>
       </section>
     </main>
     <script src="/app.js" type="module"></script>

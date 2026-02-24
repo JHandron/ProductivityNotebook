@@ -1,12 +1,16 @@
 import { createApp } from "./app.js";
 import { env } from "./config/env.js";
-import { createEventRepository } from "./persistence/eventRepository.js";
+import { createRepositories } from "./persistence/eventRepository.js";
 import { EventService } from "./services/eventService.js";
+import { EventTypeService } from "./services/eventTypeService.js";
+import { NoteService } from "./services/noteService.js";
 
 const bootstrap = async () => {
-  const { repository, close } = await createEventRepository(env);
-  const eventService = new EventService(repository);
-  const app = createApp({ eventService });
+  const { eventRepository, eventTypeRepository, noteRepository, close } = await createRepositories(env);
+  const eventService = new EventService(eventRepository, eventTypeRepository);
+  const eventTypeService = new EventTypeService(eventTypeRepository);
+  const noteService = new NoteService(noteRepository);
+  const app = createApp({ eventService, eventTypeService, noteService });
 
   const server = app.listen(env.port, () => {
     const mode = env.mongoUri ? "MongoDB" : "in-memory";

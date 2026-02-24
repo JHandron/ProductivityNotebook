@@ -1,8 +1,9 @@
 const isISODate = (value) => /^\d{4}-\d{2}-\d{2}$/.test(value);
 
 export class EventService {
-  constructor(eventRepository) {
+  constructor(eventRepository, eventTypeRepository) {
     this.eventRepository = eventRepository;
+    this.eventTypeRepository = eventTypeRepository;
   }
 
   async listByDateRange({ startDate, endDate }) {
@@ -22,14 +23,19 @@ export class EventService {
       throw new Error("date must be YYYY-MM-DD");
     }
 
-    if (!input.eventType?.trim()) {
-      throw new Error("eventType is required");
+    if (!input.eventTypeId?.trim()) {
+      throw new Error("eventTypeId is required");
+    }
+
+    const knownTypes = await this.eventTypeRepository.list();
+    if (!knownTypes.some((eventType) => eventType.id === input.eventTypeId)) {
+      throw new Error("eventTypeId does not exist");
     }
 
     return this.eventRepository.create({
       title: input.title.trim(),
       date: input.date,
-      eventType: input.eventType.trim(),
+      eventTypeId: input.eventTypeId,
       details: input.details?.trim() ?? ""
     });
   }

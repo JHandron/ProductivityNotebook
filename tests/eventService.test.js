@@ -1,8 +1,8 @@
-import test from 'node:test';
-import assert from 'node:assert/strict';
-import { EventService } from '../src/services/eventService.js';
+import test from "node:test";
+import assert from "node:assert/strict";
+import { EventService } from "../src/services/eventService.js";
 
-class FakeRepository {
+class FakeEventRepository {
   constructor() {
     this.events = [];
   }
@@ -12,28 +12,51 @@ class FakeRepository {
   }
 
   async create(event) {
-    const created = { ...event, id: '1' };
+    const created = { ...event, id: "1" };
     this.events.push(created);
     return created;
   }
 }
 
-test('creates and lists events in range', async () => {
-  const repo = new FakeRepository();
-  const service = new EventService(repo);
+class FakeEventTypeRepository {
+  async list() {
+    return [{ id: "type-workout", name: "Workout", colorHex: "#2563eb" }];
+  }
+}
 
-  await service.create({ title: 'Walk', date: '2026-01-02', eventType: 'Exercise', details: '' });
-  const events = await service.listByDateRange({ startDate: '2026-01-01', endDate: '2026-01-31' });
+test("creates and lists events in range", async () => {
+  const repo = new FakeEventRepository();
+  const eventTypeRepo = new FakeEventTypeRepository();
+  const service = new EventService(repo, eventTypeRepo);
+
+  await service.create({
+    title: "Walk",
+    date: "2026-01-02",
+    eventTypeId: "type-workout",
+    details: ""
+  });
+  const events = await service.listByDateRange({ startDate: "2026-01-01", endDate: "2026-01-31" });
 
   assert.equal(events.length, 1);
-  assert.equal(events[0].title, 'Walk');
+  assert.equal(events[0].title, "Walk");
 });
 
-test('validates date format', async () => {
-  const repo = new FakeRepository();
-  const service = new EventService(repo);
+test("validates date format", async () => {
+  const repo = new FakeEventRepository();
+  const eventTypeRepo = new FakeEventTypeRepository();
+  const service = new EventService(repo, eventTypeRepo);
 
   await assert.rejects(() =>
-    service.create({ title: 'Walk', date: '01/02/2026', eventType: 'Exercise' })
+    service.create({ title: "Walk", date: "01/02/2026", eventTypeId: "type-workout" })
+  );
+});
+
+test("rejects unknown eventTypeId", async () => {
+  const repo = new FakeEventRepository();
+  const eventTypeRepo = new FakeEventTypeRepository();
+  const service = new EventService(repo, eventTypeRepo);
+
+  await assert.rejects(() =>
+    service.create({ title: "Walk", date: "2026-01-02", eventTypeId: "missing-type" })
   );
 });
