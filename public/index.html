@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Productivity Notebook</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <main>
+      <h1>Productivity Notebook</h1>
+
+      <section class="panel">
+        <h2>Event types</h2>
+        <form id="event-type-form" class="inline-form">
+          <input name="name" placeholder="Workout" required />
+          <input name="colorHex" type="color" value="#2563eb" required />
+          <button type="submit">Add type</button>
+        </form>
+        <ul id="event-types-list"></ul>
+      </section>
+
+      <section class="panel">
+        <h2>Month Calendar</h2>
+        <div class="calendar-nav">
+          <button id="prev-month">←</button>
+          <h3 id="month-label"></h3>
+          <button id="next-month">→</button>
+        </div>
+        <div class="calendar-grid" id="calendar-grid"></div>
+      </section>
+
+      <section class="panel details-panel">
+        <h2 id="selected-date-label">Select a day</h2>
+
+        <form id="event-form" class="stacked-form">
+          <h3>Add event</h3>
+          <input name="title" placeholder="Leg day" required />
+          <select name="eventTypeId" id="event-type-select" required></select>
+          <textarea name="details" rows="2" placeholder="Optional details"></textarea>
+          <button type="submit">Save event</button>
+        </form>
+
+        <form id="note-form" class="stacked-form">
+          <h3>Daily note</h3>
+          <textarea name="content" rows="3" placeholder="Weight - 147.6 lbs."></textarea>
+          <button type="submit">Save note</button>
+        </form>
+      </section>
+    </main>
+    <script src="/app.js" type="module"></script>
+  </body>
+</html>

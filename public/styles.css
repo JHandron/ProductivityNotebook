@@ -1,0 +1,101 @@
+:root {
+  font-family: Arial, sans-serif;
+  color: #0f172a;
+}
+
+body {
+  margin: 0;
+  background: #f1f5f9;
+}
+
+main {
+  max-width: 1000px;
+  margin: 2rem auto;
+  display: grid;
+  gap: 1rem;
+}
+
+.panel {
+  background: #ffffff;
+  border-radius: 0.75rem;
+  padding: 1rem;
+  box-shadow: 0 10px 20px rgba(15, 23, 42, 0.08);
+}
+
+.inline-form,
+.stacked-form {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.stacked-form {
+  flex-direction: column;
+  align-items: stretch;
+}
+
+input,
+select,
+textarea,
+button {
+  font: inherit;
+  padding: 0.45rem;
+}
+
+.calendar-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.calendar-grid {
+  margin-top: 0.75rem;
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 0.5rem;
+}
+
+.day-cell {
+  border: 1px solid #dbe3ec;
+  min-height: 95px;
+  border-radius: 0.5rem;
+  padding: 0.35rem;
+  background: #fff;
+  cursor: pointer;
+}
+
+.day-cell.selected {
+  outline: 2px solid #334155;
+}
+
+.day-num {
+  font-size: 0.85rem;
+  color: #334155;
+}
+
+.event-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  display: inline-block;
+  margin-right: 4px;
+}
+
+.event-line {
+  font-size: 0.75rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.note-marker {
+  font-size: 0.75rem;
+  color: #7c3aed;
+  margin-top: 0.25rem;
+}
+
+.details-panel {
+  display: grid;
+  gap: 1rem;
+}
