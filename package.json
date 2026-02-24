@@ -1,0 +1,16 @@
+{
+  "name": "productivity-notebook",
+  "version": "0.1.0",
+  "description": "Personal productivity calendar + notebook starter app",
+  "type": "module",
+  "main": "src/server.js",
+  "scripts": {
+    "dev": "node --watch src/server.js",
+    "start": "node src/server.js",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "express": "^4.21.2",
+    "mongodb": "^6.14.2"
+  }
+}
