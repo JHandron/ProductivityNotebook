@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Productivity Notebook</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <main>
+      <h1>Productivity Notebook</h1>
+      <p>Starter UI with vanilla JavaScript and a Node/Express API.</p>
+
+      <section>
+        <h2>Add event occurrence</h2>
+        <form id="event-form">
+          <label>Title <input name="title" required /></label>
+          <label>Date <input name="date" type="date" required /></label>
+          <label>Type <input name="eventType" placeholder="Workout" required /></label>
+          <label>Details <textarea name="details" rows="2"></textarea></label>
+          <button type="submit">Save event</button>
+        </form>
+      </section>
+
+      <section>
+        <h2>Events this month</h2>
+        <ul id="events-list"></ul>
+      </section>
+    </main>
+    <script src="/app.js" type="module"></script>
+  </body>
+</html>
