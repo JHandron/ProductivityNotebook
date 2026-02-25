@@ -50,10 +50,25 @@ button {
 }
 
 .calendar-grid {
+  margin-top: 0.5rem;
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 0.5rem;
+}
+
+
+.weekday-header {
   margin-top: 0.75rem;
   display: grid;
   grid-template-columns: repeat(7, minmax(0, 1fr));
   gap: 0.5rem;
+}
+
+.weekday-label {
+  text-align: center;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #475569;
 }
 
 .day-cell {
@@ -98,4 +113,8 @@ button {
 .details-panel {
   display: grid;
   gap: 1rem;
+}
+
+.calendar-spacer {
+  min-height: 95px;
 }
