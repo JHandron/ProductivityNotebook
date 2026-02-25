@@ -6,7 +6,10 @@ const state = {
   notes: []
 };
 
+const WEEKDAY_LABELS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
 const monthLabel = document.querySelector("#month-label");
+const weekdayHeader = document.querySelector("#weekday-header");
 const calendarGrid = document.querySelector("#calendar-grid");
 const eventTypeList = document.querySelector("#event-types-list");
 const eventTypeSelect = document.querySelector("#event-type-select");
@@ -23,6 +26,17 @@ const monthRange = (cursor) => {
 };
 
 const getEventType = (id) => state.eventTypes.find((eventType) => eventType.id === id);
+
+const renderWeekdayHeader = () => {
+  weekdayHeader.innerHTML = "";
+
+  for (const label of WEEKDAY_LABELS) {
+    const dayName = document.createElement("div");
+    dayName.className = "weekday-label";
+    dayName.textContent = label;
+    weekdayHeader.appendChild(dayName);
+  }
+};
 
 const renderEventTypes = () => {
   eventTypeList.innerHTML = "";
@@ -43,7 +57,15 @@ const renderEventTypes = () => {
 const renderCalendar = () => {
   calendarGrid.innerHTML = "";
   const { start, end } = monthRange(state.monthCursor);
-  monthLabel.textContent = state.monthCursor.toLocaleDateString(undefined, { month: "long", year: "numeric" });
+  monthLabel.textContent = state.monthCursor.toLocaleDateString(undefined, { month: "long", year: "numeric", timeZone: "UTC" });
+
+  const firstWeekday = start.getUTCDay();
+  for (let i = 0; i < firstWeekday; i += 1) {
+    const spacer = document.createElement("div");
+    spacer.className = "calendar-spacer";
+    spacer.setAttribute("aria-hidden", "true");
+    calendarGrid.appendChild(spacer);
+  }
 
   for (let day = start.getUTCDate(); day <= end.getUTCDate(); day += 1) {
     const date = new Date(Date.UTC(start.getUTCFullYear(), start.getUTCMonth(), day));
@@ -175,4 +197,5 @@ noteForm.addEventListener("submit", async (event) => {
   await loadMonthData();
 });
 
+renderWeekdayHeader();
 await loadMonthData();
